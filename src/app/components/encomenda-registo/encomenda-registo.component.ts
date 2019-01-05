@@ -18,8 +18,7 @@ export class EncomendaRegistoComponent implements OnInit {
   error = '';
   //medicoId = 1;
   utenteId: Number;
-  dataAct = new Date();
-  lstProduto
+  dataAct = new Date(); 
   produtos: Produto[] = [];
   availableProdutos: any = [];
   selectedProduto: number;

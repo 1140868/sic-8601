@@ -12,6 +12,7 @@ export class FabricaRotaComponent implements OnInit {
   model: any = {};
   loading = false;
   error = '';
+  sucesso = '';
   constructor(private router: Router,private FabricaService: FabricaService) { }
 
   ngOnInit() {
