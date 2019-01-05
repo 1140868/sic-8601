@@ -1,0 +1,12 @@
+<h2>Catálogos</h2>
+
+<ul class="catalogo">
+  <li *ngFor="let catalogo of catalogo">
+    <a routerLink="/catalogo-detail/{{catalogo.id}}">
+    <span class="badge">{{catalogo.id}}</span> {{catalogo.name}}
+  </a>
+  <button class="delete" title="delete catalog"
+  (click)="delete(catalogo.id)">x</button>
+  </li>
+</ul>
+ 

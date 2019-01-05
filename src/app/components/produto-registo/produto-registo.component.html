@@ -1,0 +1,155 @@
+<h1>Criação de Produto</h1>
+<hr><br>
+<div class="col-md-6 col-md-offset-3">
+  <form name="form" (ngSubmit)="f.form.valid && createProduct()" #f="ngForm" novalidate>
+
+    <!--Name Row-->
+    <div class="form-group">
+      <label for="prod_name">Nome<br></label>
+      <input class="form-control" [(ngModel)]="selectedName" type="text" name="prod_name" [(value)]="selectedName"
+        (ngModelChange)="setName(selectedName);validateForms()" required>
+    </div>
+    <!--Description Row-->
+    <div class="form-group">
+      <label for="DescriptionLabel">Descrição<br></label>
+      <input class="form-control" [(ngModel)]="selectedDescription" type="text" name="prod_desc" [(value)]="selectedDescription"
+        (ngModelChange)="setDescription(selectedDescription);validateForms()" required>
+
+    </div>
+    <!--Price Row-->
+    <div class="form-group">
+      <label for="PriceLabel">Preço<br></label>
+      <input class="form-control" [(ngModel)]="selectedPrice" type="number" name="prod_price" [(value)]="selectedPrice"
+        (ngModelChange)="setPrice(selectedPrice);validateForms()" required>
+
+    </div>
+    <!--Category Row-->
+    <div class="form-group">
+      <label for="Category">Categoria<br></label>
+      <select class="form-control" (change)="setCategory($event.target.value);validateForms()" name="category"
+        [(ngModel)]="selectedCategory">
+        <option *ngFor="let category of availableCategories" value={{category.id}}>{{category.name}}</option>
+      </select>
+    </div>
+    <!--Warning/Info header-->
+    <div class="form-group">
+      <br>
+      <div class="isa_info">
+        <p><i class="fa fa-cubes"></i><b>Definir medições e limites.</b></p>
+      </div>
+      <br>
+    </div>
+    <!--Min/Max Occupation Row-->
+    <div class="form-group">
+      <label for="MinOccupationLabel">Min Ocupação<br></label>
+      <input class="form-control" name="prod_minOccupation" [(ngModel)]="selectedMinOccupation" type="number" name="prod_minOcc"
+        [(value)]="selectedMinOccupation" (ngModelChange)="setMinOccupation(selectedMinOccupation);validateForms()"
+        required>
+    </div>
+    <div class="form-group">
+      <label for="MaxOccupationLabel">Max Ocupação<br></label>
+      <input class="form-control" name="prod_maxOccupation" [(ngModel)]="selectedMaxOccupation" type="number" name="prod_maxOcc"
+        [(value)]="selectedMaxOccupation" (ngModelChange)="setMaxOccupation(selectedMaxOccupation);validateForms()"
+        required>
+    </div>
+
+    <div class="col-xs-6">
+      <!--Height Row-->
+      <div class="form-group">
+        <label for="HeightLabel">Altura<br></label>
+        <input class="form-control" [(ngModel)]="selectedHeight" type="number" name="prod_height" [(value)]="selectedHeight"
+          (ngModelChange)="setHeight(selectedHeight);validateForms()" required>
+
+      </div>
+      <!--Width Row-->
+      <div class="form-group">
+        <label for="WidthLabel">Largura<br></label>
+        <input class="form-control" name="prod_width" type="number" [(ngModel)]="selectedWidth" [(value)]="selectedWidth"
+          (ngModelChange)="setWidth(selectedWidth);validateForms()" required>
+      </div>
+      <!--Depth Row-->
+      <div class="form-group">
+        <label for="DepthLabel">Produndidade<br></label>
+        <input class="form-control" name="prod_depth" type="number" [(ngModel)]="selectedDepth" [(value)]="selectedDepth"
+          (ngModelChange)="setDepth(selectedDepth);validateForms()" required>
+      </div>
+
+    </div>
+    <div class="col-xs-6">
+      <!--MAX-->
+      <div class="form-group">
+        <label for="HeightMaxLabel">Max Altura<br></label>
+        <input class="form-control" name="prod_heightmax" type="number" [(ngModel)]="selectedHeightMax" [(value)]="selectedHeightMax"
+          (ngModelChange)="setHeightMax(selectedHeightMax);validateForms()" required>
+      </div>
+
+      <div class="form-group">
+        <label for="WidthMaxLabel">Max Largura<br></label>
+        <input class="form-control" name="prod_widthmax" type="number" [(ngModel)]="selectedWidthMax" [(value)]="selectedWidthMax"
+          (ngModelChange)="setWidthMax(selectedWidthMax);validateForms()" required>
+
+      </div>
+      <div class="form-group">
+        <label for="DepthMaxLabel">Max Produndidade<br></label>
+        <input class="form-control" name="prod_depthhmax" type="number" [(ngModel)]="selectedDepthMax" [(value)]="selectedDepthMax"
+          (ngModelChange)="setDepthMax(selectedDepthMax);validateForms()" required>
+      </div>
+    </div>
+    <!--Warning/Info header-->
+    <div class="form-group">
+      <br>
+      <div class="isa_info">
+        <p><i class="fa fa-tint"></i><b>Que toques finais pretende adicionar?</b></p>
+      </div>
+      <br>
+    </div>
+    <!--Material Row-->
+    <div class="form-group">
+      <label for="Material">Material<br></label>
+      <select class="form-control" (change)="setMaterial($event.target.value);validateForms()" name="material"
+        [(ngModel)]="selectedMaterial">
+        <option *ngFor="let material of availableMaterials" value={{material.id}}>{{material.name}}</option>
+      </select>
+    </div>
+    <!--Finish Row-->
+    <div class="form-group">
+      <label for="Finish">Finais</label>
+      <br>
+      <div *ngFor="let finish of availableFinishes">
+        {{finish.name}} : {{finish.description}}
+      </div>   </div>
+    <!--Warning/Info header-->
+    <div class="form-group">
+      <br>
+      <div class="isa_info">
+        <p><i class="fa fa-object-group"></i><b>Tem algum produto "pai"?</b></p>
+      </div> 
+    </div>
+    <div class="form-group">
+      <label for="parentLabel">Pai ID<br></label>
+      <input class="form-control" name="prod_parent" type="number" [(ngModel)]="selectedParent" [(value)]="selectedParent"
+        (ngModelChange)="setParent(selectedParent);validateForms()" placeholder="Deixar em branco se não deseja ter um produto pai.">
+    </div>
+    <!--Buttons buttons-->
+    <div class="form-group">
+      <button [disabled]="loading" class="btn btn-primary">Registar</button>
+      <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYo
+    KCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5
+    mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2
+    LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG
+    4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAA
+    AsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJ
+    Z7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYum
+    CYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAE
+    AAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpF
+    KSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojE
+    MBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZ
+    nFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAAL
+    AAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAi
+    B1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+    </div>
+    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    <br> <br> 
+  </form>
+
+</div>

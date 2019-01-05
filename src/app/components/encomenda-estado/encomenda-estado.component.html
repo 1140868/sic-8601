@@ -1,0 +1,28 @@
+<h1>
+  Mudar Estado Encomendas
+</h1>
+<br>
+<div class="col-md-8 col-md-offset-2">
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <tr>
+        <th>id</th>
+        <th>Cliente</th>
+        <th>Estado</th>
+      </tr>
+      <tr *ngFor="let Encomenda of encomendas">
+        <td>{{ Encomenda._id }}</td>
+        <td>{{ Encomenda.order_userID }}</td>
+        <td> 
+          
+            <select class="form-control" (change)="setState($event.target.value,Encomenda._id);" [(ngModel)]="Encomenda.order_state"
+            #State="ngModel" required>
+            <option *ngFor="let state of encomendaState" value={{state}}>{{state}}</option>
+          </select>
+          
+          
+          </td>
+      </tr>
+    </table>
+  </div>
+</div>

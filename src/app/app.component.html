@@ -1,0 +1,92 @@
+<!-- header -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<nav class="navbar">
+    <div class="banner">
+        <img height="90px" src="../assets/banner.jpg" alt="Snow" style="width:100%;">
+        <div class="top-left">SiC Catalog</div>
+    </div>
+    <div class="topnav">
+        <div *ngIf="userInfo && userInfo.gestor" class="subnav">
+            <button class="subnavbtn">Catálogo<i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <a *ngIf="userInfo  " href="/add-catalogo">Registar</a>
+                <a *ngIf="userInfo " href="/catalogo">Listar</a>
+            </div>
+        </div>
+        <div *ngIf="userInfo && userInfo.gestor" class="subnav">
+            <button class="subnavbtn">Coleções<i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <a *ngIf="userInfo  " href="/add-colecoes">Registar</a>
+                <a *ngIf="userInfo " href="/colecoes">Listar</a>
+            </div>
+        </div>
+        <!-- ............. -->
+        <a *ngIf="!userInfo" routerLink="/app-encomenda-registo">Encomendas</a>
+        <div *ngIf="userInfo" class="subnav">
+            <button class="subnavbtn">Encomendas<i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <a *ngIf="userInfo && userInfo.cliente" href="app-encomenda-registo">Registar</a>
+                <a *ngIf="userInfo && userInfo.cliente" href="app-encomenda-lista">Listar</a>
+                <a *ngIf="userInfo && userInfo.gestor" href="app-encomenda-estado">Mudar Estado</a>
+            </div>
+        </div>
+        <!-- ............. -->
+        <a *ngIf="!userInfo || ( userInfo && userInfo.cliente  && !( userInfo.gestor || userInfo.administrador))"
+            routerLink="/app-produto-list">Produtos</a>
+
+        <div *ngIf="userInfo  && ( userInfo.gestor || userInfo.administrador)" class="subnav">
+            <button class="subnavbtn">Produtos<i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <a *ngIf="userInfo  && ( userInfo.gestor || userInfo.administrador)" href="app-produto-registo">Registar</a>
+                <a *ngIf="userInfo  && ( userInfo.gestor || userInfo.administrador)" href="app-produto-list">Listar</a>
+            </div>
+        </div>
+
+        <!-- ............. -->
+        <div *ngIf="userInfo  && ( userInfo.gestor || userInfo.administrador)" class="subnav">
+            <button class="subnavbtn">Materiais<i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <a *ngIf="userInfo  && (  userInfo.administrador)" href="app-material">Registar</a>
+                <a *ngIf="userInfo  && ( userInfo.gestor || userInfo.administrador)" href="app-material-list">Listar</a>
+            </div>
+        </div>
+
+        <!-- <a *ngIf="userInfo  && ( userInfo.gestor || userInfo.administrador)" routerLink="/app-fabrica">Fábricas</a> -->
+        <div *ngIf="userInfo  && ( userInfo.gestor || userInfo.administrador)" class="subnav">
+            <button class="subnavbtn">Fábricas<i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <a href="/app-fabrica-registo">Registar</a>
+                <a href="/app-fabrica">Listar</a>
+                <a href="/app-fabrica-rota">Rotas (Falta)</a>
+            </div>
+        </div>
+      
+
+
+            
+        <div *ngIf="userInfo  && ( userInfo.gestor || userInfo.administrador)" class="subnav">
+            <button class="subnavbtn">Preços<i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <a href="/alterarPreco">Alterar Preço</a>
+                <a href="/historic">Historico de Preços</a>
+            </div>
+    </div>
+        <div class="search-container">
+            <a *ngIf="!userInfo" routerLink="/app-login">Entrar</a>
+            <a *ngIf="userInfo" routerLink="/app-login">Sair</a>
+            <a *ngIf="userInfo" routerLink="/app-login-gestao">Alterar conta</a>
+            <a *ngIf="!userInfo" routerLink="/register">Registar</a>
+        </div>
+    </div>
+</nav>
+
+
+<!-- routes will be rendered here -->
+<router-outlet></router-outlet>
+<!-- footer -->
+<div class="footer">
+    © Lapr5, Nº Grupo 8601, 2018 |
+    <a routerLink="/about">Sobre</a> |
+    <a routerLink="/condicoes">Política de Privacidade</a>
+</div>

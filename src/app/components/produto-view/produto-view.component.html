@@ -1,0 +1,95 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>
+  // Get the modal
+  var modal = document.getElementById('myModal');
+  // Get the button that opens the modal
+  var btn = document.getElementById("myBtn");
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+  // When the user clicks on the button, open the modal
+  btn.onclick = function () {
+    modal.style.display = "block";
+  }
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  }
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  } 
+</script>
+<div *ngIf="product">
+  <h1>{{product.name}}</h1>
+  <hr><br>
+  <main class="container">
+    <!-- Left Column / Headphones Image -->
+    <div class="left-column">
+      <img class="active" src="../../../assets/product.png" alt="Product" width="70%" height="70%">
+    </div>
+    <!-- Right Column -->
+    <div class="right-column">
+      <!-- Product Description -->
+      <div class="product-description">
+        <!-- <span> {{product.prod_category[0].category_name}}</span> -->
+        <button routerLink="edit"  routerLinkActive="active" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</button>
+        <p>{{product.description}}</p>
+        <table>
+
+          <tr>
+            <th>Min/Max Ocupação:</th>
+            <td>{{product.minOccupation}} / {{product.maxOccupation}}</td>
+          </tr>
+          <tr>
+          <tr>
+            <th>Materiais:</th>
+            <td>{{materials}}</td>
+          </tr>
+          <tr>
+            <div *ngIf="discreteHeight; then showDiscreteHeight; else showContinuousHeight"></div>
+            <ng-template #showDiscreteHeight>
+              <th>Altura:</th>
+              <td>{{product.dimension.height.value}}</td>
+            </ng-template>
+            <ng-template #showContinuousHeight>
+              <th>Altura / Max Altura:</th>
+              <td>{{product.dimension.height.value}} up to {{product.dimension.height.valueMax}}</td>
+            </ng-template>
+          </tr>
+          <tr>
+            <div *ngIf="discreteWidth; then showDiscreteWidth; else showContinuousWidth"></div>
+            <ng-template #showDiscreteWidth>
+              <th>Largura:</th>
+              <td>{{product.dimension.width.value}}</td>
+            </ng-template>
+            <ng-template #showContinuousWidth>
+              <th>Largura / Max Largura:</th>
+              <td>{{product.dimension.width.value}} up to {{product.dimension.width.valueMax}}</td>
+            </ng-template>
+          </tr>
+          <tr>
+            <div *ngIf="discreteDepth; then showDiscreteDepth; else showContinuousDepth"></div>
+            <ng-template #showDiscreteDepth>
+              <th>Profundidade:</th>
+              <td>{{product.dimension.depth.value}}</td>
+            </ng-template>
+            <ng-template #showContinuousDepth>
+              <th>Profundidade / Max Profundidade:</th>
+              <td>{{product.dimension.depth.value}} up to {{product.dimension.depth.valueMax}}</td>
+            </ng-template>
+          </tr>
+        </table>
+        <br><br>
+      </div>
+      <!-- Product Configuration -->
+      <div class="product-configuration">
+      </div>
+      <!-- Product Pricing -->
+      <div class="product-price">
+        <span>{{product.price}} €</span>
+      </div>
+    </div>
+  </main>
+</div>

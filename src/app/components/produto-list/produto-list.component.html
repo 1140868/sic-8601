@@ -1,0 +1,22 @@
+<h1>Produtos</h1>
+<hr><br>
+<div class="grid grid-pad">
+  <div class="main">
+    <a *ngFor="let product of produtos" class="col-1-4" href="app-produto-list/{{product.id}}">
+      <div class="card">
+        <img src="../../../assets/product.png" alt="Product" style="width:50%; height:50%">
+        <h4>{{product.name}}</h4>
+        <p class="price">{{product.price}} €</p>
+        <p>{{product.description}}</p>
+        <p>Min/Max Ocupação: {{product.minOccupation}} | {{product.maxOccupation}}</p>
+        <p><b>Medidas:</b></p>
+        <p><b>Largura:</b> {{product.dimension.height.value}} | {{product.dimension.height.valueMax}}</p>
+        <p><b>Altura:</b> {{product.dimension.width.value}} | {{product.dimension.width.valueMax}}</p>
+        <p><b>Produndidade:</b> {{product.dimension.depth.value}} | {{product.dimension.depth.valueMax}}</p>
+      </div>
+    </a>
+  </div>
+</div>
+<ng-template no_products>
+  <p> The user does not have any product items. </p>
+</ng-template>

@@ -1,0 +1,12 @@
+<h2>Coleções</h2>
+
+<ul class="colecoes">
+  <li *ngFor="let colecoes of colecoes">
+    <a routerLink="/colecao-detail/{{colecoes.id}}">
+    <span class="badge">{{colecoes.id}}</span> {{colecoes.name}}
+  </a>
+  <button class="delete" title="delete colecoes"
+  (click)="delete(colecoes.id)">x</button>
+  </li>
+</ul>
+ 

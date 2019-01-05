@@ -1,0 +1,68 @@
+<h1>Encomenda (Registo)</h1>
+<hr><br>
+<div class="col-md-6 col-md-offset-3">
+
+  <form name="form" (ngSubmit)="criarOrdem()" #f="ngForm" novalidate>
+    <div class="form-group">
+      <label for="data">Data
+        <br>
+      </label>
+      {{dataAct | date:'yyyy-MM-dd'}}
+    </div>
+    <div class="form-group">
+      <br>
+      <form name="formP" (ngSubmit)="fp.form.valid && guardarProduto()" #fp="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': fp.submitted && !Produto_id.valid }">
+          <label for="Produto_id">Produto <br> </label>
+          <!-- <input type="number" class="form-control" name="Produto_id" placeholder="Id do Produto" min="1" [(ngModel)]="model.Produto_id"
+            #Produto_id="ngModel" required /> -->
+          <select class="form-control" (change)="setCategory($event.target.value);" name="Produto_id" [(ngModel)]="selectedProduto"
+            #Produto_id="ngModel" required>
+            <option *ngFor="let category of availableProdutos" value={{category.id}}>{{category.name}}</option>
+          </select>
+          <div *ngIf="fp.submitted && !Produto_id.valid" class="helpblock"> Produto is required</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': fp.submitted && !quantidade.valid }">
+          <label for="quantidade">Quantidade
+            <br>
+          </label>
+          <input type="number" class="form-control" name="quantidade" placeholder="Quantidade" min="1" [(ngModel)]="model.quantidade"
+            #quantidade="ngModel" required />
+          <div *ngIf="fp.submitted && !quantidade.valid" class="helpblock">Quantidade is required</div>
+        </div>
+        <button [disabled]="loading" class="btn btn-primary">Acrescentar Produto</button>
+        <table class="table">
+          <tr>
+            <th>Produto</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <!-- <th></th> -->
+          </tr>
+          <tr *ngFor="let item of produtos">
+            <td>{{ item.id }}-{{ item.name }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+          </tr>
+        </table>
+      </form>
+      <p></p>
+      <button [disabled]="loading" class="btn btn-success">Registar</button>
+      <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYo
+             KCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5
+             mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2
+             LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG
+             4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAA
+             AsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJ
+             Z7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYum
+             CYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAE
+             AAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpF
+             KSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojE
+             MBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZ
+             nFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAAL
+             AAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAi
+             B1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+    </div>
+    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    <!--<div *ngIf="sucesso" class="alert alert-success">{{sucesso}}</div>-->
+  </form>
+</div>

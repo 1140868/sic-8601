@@ -1,0 +1,62 @@
+<h1>Criação de Materiais</h1>
+<hr><br>
+<div class="col-md-6 col-md-offset-3">
+  <form name="form" (ngSubmit)="f.form.valid && createMaterial()" #f="ngForm" novalidate>
+
+    <!--Name Row-->
+    <div class="form-group">
+      <label for="material_name">Nome<br></label>
+      <input class="form-control" [(ngModel)]="selectedName" type="text" name="material_name" [(value)]="selectedName"
+        (ngModelChange)="setName(selectedName);validateForms()" required>
+    </div>
+    <!--Description Row-->
+    <div class="form-group">
+      <label for="DescriptionLabel">Descrição<br></label>
+      <input class="form-control" [(ngModel)]="selectedDescription" type="text" name="material_desc" [(value)]="selectedDescription"
+        (ngModelChange)="setDescription(selectedDescription);validateForms()" required>
+
+    </div>
+    
+    <!--Warning/Info header-->
+    <div class="form-group">
+      <br>
+      <div class="isa_info">
+        <p><i class="fa fa-tint"></i><b>Que toques finais pretende adicionar?</b></p>
+      </div>
+      <br>
+    </div>
+    
+
+    <!--Finish Row-->
+    <div class="form-group">
+      <label for="Finish">Finish<br></label>
+      <select class="form-control" (change)="setFinish($event.target.value);validateForms()" name="finish"
+        [(ngModel)]="selectedFinish">
+        <option *ngFor="let finish of availableFinishes" value={{finish.id}}>{{finish.name}}</option>
+      </select>
+    </div>
+    
+    
+    <!--Buttons buttons-->
+    <div class="form-group">
+      <button [disabled]="loading" class="btn btn-primary">Registar</button>
+      <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYo
+    KCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5
+    mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2
+    LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG
+    4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAA
+    AsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJ
+    Z7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYum
+    CYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAE
+    AAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpF
+    KSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojE
+    MBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZ
+    nFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAAL
+    AAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAi
+    B1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+    </div>
+    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    <br> <br> 
+  </form>
+
+</div>

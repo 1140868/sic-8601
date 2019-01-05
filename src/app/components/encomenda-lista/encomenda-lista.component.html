@@ -1,0 +1,35 @@
+<h1>Encomenda (Lista)</h1>
+<hr><br>
+<div class="col-md-8 col-md-offset-2">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <tr>
+                <th>Encomenda</th>
+                <th>Data</th>
+                <th>Custo</th>
+                <th>Fábrica</th>
+                <th>Estado</th>
+                <th>Anular</th>
+                <!-- <th></th> -->
+            </tr>
+            <tr *ngFor="let obj of encomenda">
+                    <td>{{ obj._id }}</td>
+                    <td>{{ obj.order_date }}</td>
+                    <td>{{ obj.order_cost }}</td>
+                    <td>{{ obj.order_Factorie.nome}}</td>
+                    <td>{{ obj.order_state }}</td>
+                    <td>
+                        <div *ngIf="obj.order_state=='Submetida'">
+                            <button (click)="setCanceled(obj._id);" style="background-color:white"><i class="fa fa-trash-o"></i></button>
+                        </div>
+                    </td>
+                        <!-- <td>{{ obj.morada }}</td>
+                  <td>{{ obj.latitude }}</td>
+                  <td>{{ obj.longitude }}</td> -->
+                <!-- <td><a href="app-fabrica/delete/{{ fabrica.id }}"><img src="https://img.icons8.com/color/16/000000/close-window.png"></a></td> -->
+            </tr>
+        </table>
+    </div>
+
+
+</div>

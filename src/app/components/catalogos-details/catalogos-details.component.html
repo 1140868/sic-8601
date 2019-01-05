@@ -1,0 +1,70 @@
+<div *ngIf="catalogo">
+    <div class="col-md-6 col-md-offset-3">
+        
+  <h2>{{model.name | uppercase}} Details</h2>
+
+  <div class="form-group">
+    <label for="data">Data: 
+      <br>
+    </label>
+    {{catalogo.date | uppercase}} 
+  </div>
+
+  <div>
+    <label>Nome: 
+      <input type="text" class="form-control" name="Name" [(ngModel)]="model.name" #name="ngModel" required />
+   
+    </label>
+  </div>
+
+  <form name="formP" (ngSubmit)="fp.form.valid && guardarProduto()" #fp="ngForm" novalidate>
+      <div class="form-group" [ngClass]="{ 'has-error': fp.submitted && !Produto_id.valid }">
+        <label for="Produto_id">Produto <br> </label>
+        <select class="form-control" (change)="setCategory($event.target.value);" name="Produto_id" [(ngModel)]="selectedCategory"
+          #Produto_id="ngModel" required>
+          <option *ngFor="let category of availableProdutos" value={{category.id}}>{{category.name}}</option>
+        </select>
+        <div *ngIf="fp.submitted && !Produto_id.valid" class="helpblock"> Produto is required</div>
+      </div>
+
+      <button [disabled]="loading" class="btn btn-primary">Acrescentar Produto</button>
+      <table class="table">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Preço</th>
+        </tr>
+        <tr *ngFor="let item of produtos">
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price }}</td>
+        </tr>
+      </table>
+    </form>
+
+    <div class="form-group">
+      <br>
+      <button (click)="goBack()" [disabled]="loading" class="btn btn-primary">go back</button>
+      
+      <button (click)="save(catalogo)" [disabled]="loading" class="btn btn-primary">save</button>
+      <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYo
+           KCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5
+           mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2
+           LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG
+           4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAA
+           AsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJ
+           Z7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYum
+           CYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAE
+           AAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpF
+           KSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojE
+           MBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZ
+           nFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAAL
+           AAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAi
+           B1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+    </div>
+    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    <br> <br>
+
+</div>
+</div>
+

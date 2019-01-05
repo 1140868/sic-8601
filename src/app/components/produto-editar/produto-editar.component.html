@@ -1,0 +1,182 @@
+<h1>Edição de Produto</h1>
+<hr><br>
+<div *ngIf="product">
+    <div class="col-md-6 col-md-offset-3">
+        <form action="/action_page.php">
+            <!--Warning/Info header-->
+
+            <div class="isa_error">
+                <p><span><b>Warning:</b></span> The changes made here are irreversible. Please proceed with
+                    caution.</p>
+            </div>
+            <div class="isa_info">
+                <p><span><b>Info:</b></span> Set Max Height/Width/Depth as 0 for discrete measures.</p>
+            </div>
+            <br>
+            <p><b><i class="fa fa-dropbox"></i> Selected Product:</b> {{product.id}} -
+                {{product.name}}: {{product.description}} | <b>DimensionID</b> -> {{product.dimensionId}}</p>
+            <br>
+            <!--Warning/Info header-->
+
+            <br>
+            <div class="isa_warning">
+                <p><i class="fa fa-cubes"></i><b>Change Measurements</b></p>
+            </div>
+            <br>
+
+            <!--Height Row-->
+
+            <div class="form-group">
+                <label for="HeightLabel">Height</label>
+
+                <input class="form-control" name="prod_height" type="number" placeholder="Current: {{product.dimension.height.value}}"
+                    [(ngModel)]="selectedHeight" [(value)]="selectedHeight" (ngModelChange)="setHeight(selectedHeight);validateMeasurements()"
+                    required>
+            </div>
+
+
+            <div class="form-group">
+                <label for="HeightMaxLabel">Max Height</label>
+                <input class="form-control" name="prod_heightmax" type="number" placeholder="Current: {{product.dimension.height.valueMax}}"
+                    [(ngModel)]="selectedHeightMax" [(value)]="selectedHeightMax" (ngModelChange)="setHeightMax(selectedHeightMax);validateMeasurements()"
+                    required>
+            </div>
+            <!--Width Row-->
+
+            <div class="form-group">
+                <label for="WidthLabel">Width</label>
+
+                <input class="form-control" name="prod_width" type="number" placeholder="Current: {{product.dimension.width.value}}"
+                    [(ngModel)]="selectedWidth" [(value)]="selectedWidth" (ngModelChange)="setWidth(selectedWidth);validateMeasurements()"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+                <label for="WidthMaxLabel">Max Width</label>
+
+                <input class="form-control" name="prod_widthmax" type="number" placeholder="Current: {{product.dimension.width.valueMax}}"
+                    [(ngModel)]="selectedWidthMax" [(value)]="selectedWidthMax" (ngModelChange)="setWidthMax(selectedWidthMax);validateMeasurements()"
+                    required>
+            </div>
+            <!--Depth Row-->
+
+            <div class="form-group">
+                <label for="DepthLabel">Depth</label>
+
+                <input class="form-control" name="prod_depth" type="number" placeholder="Current: {{product.dimension.depth.value}}"
+                    [(ngModel)]="selectedDepth" [(value)]="selectedDepth" (ngModelChange)="setDepth(selectedDepth);validateMeasurements()"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="DepthMaxLabel">Max Depth</label>
+
+                <input class="form-control" name="prod_depthhmax" type="number" placeholder="Current: {{product.dimension.depth.valueMax}}"
+                    [(ngModel)]="selectedDepthMax" [(value)]="selectedDepthMax" (ngModelChange)="setDepthMax(selectedDepthMax);validateMeasurements()"
+                    required>
+            </div>
+            <!--Edit Measurement Button-->
+            <div class="row">
+                <br>
+                <!--If form is valid, enable button-->
+                <div *ngIf="validMeasures; else disable_button">
+                    <button (click)="editMeasurement()" class="button" style="vertical-align:middle">
+                        <span>Edit Measurements</span>
+                    </button>
+                </div>
+                <!--Else, show disabled button-->
+                <ng-template #disable_button>
+                    <button (click)="editMeasurement()" class="button" style="vertical-align:middle" disabled>
+                        <span>Edit Measurements</span>
+                    </button>
+                </ng-template>
+            </div>
+
+            <!--Edit Material/Finish-->
+            <!--Warning/Info header-->
+            <div class="row">
+                <br>
+                <div class="isa_warning">
+                    <p><i class="fa fa-tint"></i><b>Change Material and Finishes</b></p>
+                </div>
+                <br>
+            </div>
+            <!--Available Material-->
+            <div class="form-group">
+                <label for="Material">Available Materials</label>
+                <select class="form-control" (change)="setMaterial($event.target.value)" name="material" [(ngModel)]="selectedMaterial">
+                    <option *ngFor="let material of availableMaterials" value={{material.id}}>{{material.name}}</option>
+                </select>
+                <button (click)="addFinishMaterial()" class="button-add" style="vertical-align:middle">
+                    <span>Add</span>
+                </button>
+            </div>
+            <!--Current Materials-->
+            <div class="form-group">
+                <label for="Material">Current Materials</label>
+                <select class="form-control" (change)="setCurrentMaterial($event.target.value)" name="material"
+                    [(ngModel)]="selectedCurrentMaterial">
+                    <option *ngFor="let material of product.materials" value={{material.id}}>{{material.name}}</option>
+                </select>
+                <button (click)="removeMaterial()" class="button-add-delete" style="vertical-align:middle">
+                    <span>Rem. One</span>
+                </button>
+                <button (click)="removeAllMaterial()" class="button-add-delete" style="vertical-align:middle">
+                    <span>Rem. All</span>
+                </button>
+            </div>
+            <!--Current Finish-->
+            <div class="form-group">
+                <label for="Finish">Current Finishes</label>
+                <div *ngFor="let finish of currentFinishes">
+                    {{finish.name}}
+
+                </div>
+            </div>
+
+            <!--Edit Aggregation-->
+            <!--Warning/Info header-->
+            <div class="row">
+                <br>
+                <div class="isa_warning">
+                    <p><i class="fa fa-object-group"></i><b>Change Aggregation</b></p>
+                </div>
+                <br>
+            </div>
+            <!--List of avilable components-->
+            <div class="form-group">
+                <label for="">Comp.</label>
+                <div class="divide-in-2">
+                    <select class="form-control" (change)="setComponent($event.target.value)" name="component"
+                        [(ngModel)]="selectedComponent">
+                        <option *ngFor="let component of components" value={{component.prod_dotnetid}}>{{component.prod_dotnetid}}
+                            : {{component.prod_name}}</option>
+                    </select>
+                    <!--Add button-->
+                    <button (click)="addComponent()" class="button-add" style="vertical-align:middle">
+                        <span>Add</span>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <!--List of current components-->
+                <label for="">Current</label>
+                <div *ngFor="let component of product.components">
+                    <p>{{component.id}} : {{component.name}}</p>
+                </div>
+            </div>
+            <!--Delete buttons-->
+            <div class="row"><br>
+                <button (click)="deleteProduct()" class="button-delete" style="vertical-align:middle">
+                    <span><i class="fa fa-trash"></i> Delete Product</span>
+                </button>
+                <button (click)="deleteMeasurements()" class="button-delete" style="vertical-align:middle">
+                    <span> Delete Measurements</span>
+                </button>
+                <button (click)="deleteAggregation()" class="button-delete" style="vertical-align:middle">
+                    <span>Delete Aggregation</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
